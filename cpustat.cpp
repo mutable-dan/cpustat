@@ -138,6 +138,11 @@ void calculateCpu( const vcpu& a_vci_1, const vcpu& a_vci_2 )
 
         double sum1 = cpu1.usr + cpu1.nice + cpu1.sys + cpu1.idle + cpu1.iowait + cpu1.irq + cpu1.sirq + cpu1.steal + cpu1.guest + cpu1.guestnice;
         double sum2 = cpu2.usr + cpu2.nice + cpu2.sys + cpu2.idle + cpu2.iowait + cpu2.irq + cpu2.sirq + cpu2.steal + cpu2.guest + cpu2.guestnice;
+        if( (0 == sum1) || (0 == sum2) )
+        {
+            cerr << "aborted: parsing error, sum of cpu times is zero which is an error" << endl;
+            abort();
+        }
         
         double diff_usr       = (double)(cpu2.usr       - cpu1.usr);
         double diff_nice      = (double)(cpu2.nice      - cpu1.nice);
